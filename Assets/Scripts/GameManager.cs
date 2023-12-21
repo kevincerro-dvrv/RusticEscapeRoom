@@ -7,6 +7,10 @@ public class GameManager : MonoBehaviour {
     public Material materialOne;
     public PuzzlePiece[] puzzlePieces;
     private int[] puzzlePieceCode;
+    
+    public GameObject[] greenLights;
+    public GameObject[] redLights;
+
     // Start is called before the first frame update
     void Start() {
         puzzlePieceCode = new int[puzzlePieces.Length];
