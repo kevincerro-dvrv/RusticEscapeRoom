@@ -3,27 +3,31 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.XR.Interaction.Toolkit;
 
-public class PuzzlePiece : MonoBehaviour
-{
-    private XRSocketInteractor[] puzzleSockets;
+public class PuzzlePiece : MonoBehaviour {
+    private MeshRenderer meshRenderer;
 
-    void Start()
-    {
-        puzzleSockets = GetComponentsInChildren<XRSocketInteractor>();
+    private InteractionLayerMask initialInteractionLayerMask;
+    private InteractionLayerMask noHandsInteraction;
+    // Start is called before the first frame update
+    void Awake() {
+        meshRenderer = GetComponent<MeshRenderer>();
+        if(meshRenderer == null) {
+            Debug.Log("[PuzzlePiece] " + gameObject.name + " Non se atopou o meshRenderer");
+        }
+
+
+        XRGrabInteractable xrGrabInteractable = GetComponent<XRGrabInteractable>();
+        initialInteractionLayerMask = xrGrabInteractable.interactionLayers;
+        noHandsInteraction = initialInteractionLayerMask & ~InteractionLayerMask.GetMask("Default");
+
     }
 
     // Update is called once per frame
-    void Update()
-    {
+    void Update() {
         
     }
 
-    public void ActivatePuzzlePiecesHandInteraction(bool active)
-    {
-        foreach(XRSocketInteractor xrsi in puzzleSockets) {
-            if (xrsi.selectTarget != null) {
-                PuzzlePiece puzzlePiece = xrsi.selectTarget.GetComponent<PuzzlePiece>();
-            }
-        }
+    public void SetMaterial(Material newMaterial) {
+        meshRenderer.material = newMaterial;
     }
 }

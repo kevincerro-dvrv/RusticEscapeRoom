@@ -2,35 +2,27 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class GameManager : MonoBehaviour
-{
-    // Puzzle
-    public Material[] puzzlePieceColors;
+public class GameManager : MonoBehaviour {
+    public Material[] puzzlePieceMaterials;
+    public Material materialOne;
     public PuzzlePiece[] puzzlePieces;
-    private int[] puzzleCode;
-
+    private int[] puzzlePieceCode;
     // Start is called before the first frame update
-    void Start()
-    {
-        InitPuzzleGame();
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
+    void Start() {
+        puzzlePieceCode = new int[puzzlePieces.Length];
+        int i=0;
+        foreach(PuzzlePiece puzzlePiece in puzzlePieces) {
+            puzzlePieceCode[i] = Random.Range(0, puzzlePieceMaterials.Length);
+            puzzlePiece.SetMaterial(puzzlePieceMaterials[puzzlePieceCode[i]]);
+            //puzzlePiece.SetMaterial(materialOne);
+            //puzzlePiece.GetComponent<MeshRenderer>().material = puzzlePieceMaterials[puzzlePieceCode[i]];
+            i++;
+        }
         
     }
 
-    private void InitPuzzleGame()
-    {
-        for (int i = 0; i < puzzlePieces.Length; i++) {
-            int randomIndex = Random.Range(0, puzzlePieceColors.Length);
-
-            // Set piece color
-            puzzlePieces[i].SetMaterial(puzzlePieceColors[randomIndex]);
-
-            // Store code
-            puzzleCode[i] = randomIndex;
-        }
+    // Update is called once per frame
+    void Update() {
+        
     }
 }
