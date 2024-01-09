@@ -26,8 +26,6 @@ public class GameManager : MonoBehaviour {
         foreach(PuzzlePiece puzzlePiece in puzzlePieces) {
             puzzlePieceCode[i] = Random.Range(0, puzzlePieceMaterials.Length);
             puzzlePiece.SetMaterial(puzzlePieceMaterials[puzzlePieceCode[i]]);
-            //puzzlePiece.SetMaterial(materialOne);
-            //puzzlePiece.GetComponent<MeshRenderer>().material = puzzlePieceMaterials[puzzlePieceCode[i]];
             i++;
         }
         
@@ -50,5 +48,11 @@ public class GameManager : MonoBehaviour {
         redLigths[0].SetActive( ! valid);
         greenLigths[0].SetActive(valid);
 
+    }
+
+    public void UnlockEinsteinPuzzle()
+    {
+        redLigths[1].SetActive(false);
+        greenLigths[1].SetActive(true);
     }
 }
