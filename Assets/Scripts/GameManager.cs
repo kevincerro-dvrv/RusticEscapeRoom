@@ -1,8 +1,10 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class GameManager : MonoBehaviour {
+    public static GameManager instance;
     public Material[] puzzlePieceMaterials;
     public Material materialOne;
     public PuzzlePiece[] puzzlePieces;
@@ -10,6 +12,10 @@ public class GameManager : MonoBehaviour {
     
     public GameObject[] greenLights;
     public GameObject[] redLights;
+
+    void Awake() {
+        instance = this;
+    }
 
     // Start is called before the first frame update
     void Start() {
