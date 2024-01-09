@@ -8,9 +8,7 @@ public class PuzzlePiece : MonoBehaviour {
 
     private InteractionLayerMask initialInteractionLayerMask;
     private InteractionLayerMask noHandsInteraction;
-
     private XRGrabInteractable xrGrabInteractable;
-
     // Start is called before the first frame update
     void Awake() {
         meshRenderer = GetComponent<MeshRenderer>();
@@ -18,15 +16,15 @@ public class PuzzlePiece : MonoBehaviour {
             Debug.Log("[PuzzlePiece] " + gameObject.name + " Non se atopou o meshRenderer");
         }
 
-
         xrGrabInteractable = GetComponent<XRGrabInteractable>();
         initialInteractionLayerMask = xrGrabInteractable.interactionLayers;
         noHandsInteraction = initialInteractionLayerMask & ~InteractionLayerMask.GetMask("Default");
+
     }
 
     // Update is called once per frame
     void Update() {
-
+        
     }
 
     public void SetMaterial(Material newMaterial) {
@@ -34,14 +32,16 @@ public class PuzzlePiece : MonoBehaviour {
     }
 
     public void OnSelectEntered(SelectEnterEventArgs args) {
-        PuzzleBoard puzzleBoard = args.interactor.GetComponentInParent<PuzzleBoard>();
-        if (puzzleBoard != null && puzzleBoard.IsGrabbed) {
+        PuzzleBoard puzzleBoard = args.interactor.GetComponentInParent<PuzzleBoard>() ;
+        if(puzzleBoard != null && ! puzzleBoard.IsGrabbed) {
             ActivateHandsInteraction(false);
         }
+
     }
 
     public void ActivateHandsInteraction(bool active) {
-        if (active) {
+        //Debug.Log("[PuzzlePiece] ActivateHandsInteraction " + active);
+        if(active) {
             xrGrabInteractable.interactionLayers = initialInteractionLayerMask;
         } else {
             xrGrabInteractable.interactionLayers = noHandsInteraction;

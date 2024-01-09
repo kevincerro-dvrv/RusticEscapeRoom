@@ -1,22 +1,24 @@
 using System.Collections;
 using System.Collections.Generic;
-using Unity.VisualScripting;
 using UnityEngine;
 
 public class GameManager : MonoBehaviour {
     public static GameManager instance;
+
     public Material[] puzzlePieceMaterials;
     public Material materialOne;
     public PuzzlePiece[] puzzlePieces;
+    public DoorKeyButton[] doorPanelButtons;
+
     private int[] puzzlePieceCode;
-    
-    public GameObject[] greenLights;
-    public GameObject[] redLights;
+
+    public GameObject[] redLigths;
+    public GameObject[] greenLigths;
+
 
     void Awake() {
         instance = this;
     }
-
     // Start is called before the first frame update
     void Start() {
         puzzlePieceCode = new int[puzzlePieces.Length];
@@ -34,5 +36,19 @@ public class GameManager : MonoBehaviour {
     // Update is called once per frame
     void Update() {
         
+    }
+
+    public void CheckDoorKeyCode() {
+        bool valid = true;
+        for(int i=0; i< puzzlePieceCode.Length; i++) {
+            if(puzzlePieceCode[i] != doorPanelButtons[i].MaterialIndex) {
+                valid = false;
+                break;
+            }
+        }
+
+        redLigths[0].SetActive( ! valid);
+        greenLigths[0].SetActive(valid);
+
     }
 }
