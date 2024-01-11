@@ -14,6 +14,7 @@ public class BubbleGun : MonoBehaviour {
         if(bubbleSpawnPoint == null) {
             Debug.Log("BubbleGun. A variable bubbleSpawnPoint non está correctamente inicializada");
         }
+       
     }
 
     // Update is called once per frame
@@ -21,7 +22,10 @@ public class BubbleGun : MonoBehaviour {
         
     }
 
-    public void SpawnBubble() {
-        GameObject bubbleGO = Instantiate(bubblePrefab, bubbleSpawnPoint.position, bubbleSpawnPoint.rotation);
+    public void Shot() {
+        Instantiate(bubblePrefab, bubbleSpawnPoint.position, bubbleSpawnPoint.rotation);
     }
+
+
+
 }

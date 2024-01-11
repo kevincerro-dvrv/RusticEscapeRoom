@@ -23,6 +23,7 @@ public class DoorKeyButton : MonoBehaviour {
         Debug.Log("[DoorKeyButton] Trigger detectado");
         RotateMaterial();
         GameManager.instance.CheckDoorKeyCode();
+        other.GetComponent<IndexFinger>().HapticFeedback();
     }
 
     private void RotateMaterial() {

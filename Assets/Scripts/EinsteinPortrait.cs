@@ -3,32 +3,29 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class EinsteinPortrait : MonoBehaviour {
-    private int hitCounter = 0;
-    private float t0 = 0;
-    private bool solved = false;
+    private int bubbleCount = 0;
+    private float t0;
 
     void Update() {
-        if (solved) {
-            return;
-        }
-
-        if (Time.time - t0 > 10f) {
-            hitCounter = 0;
+        //Se pasaron máis de 10 segundos dende o último impacto
+        //reseteamos a cero o contador de impactos
+        if(Time.time - t0 > 10f) {
+            bubbleCount = 0;
         }
     }
 
-    public void OnCollisionEnter(Collision other) {
-        Debug.Log("EinsteinPortrait OnCollisionEnter");
+    void OnCollisionEnter(Collision other) {
+        Debug.Log($"[EinsteinPortrait] {other.gameObject.tag}");
         if(other.gameObject.CompareTag("Bubble")) {
-            hitCounter++;
+            bubbleCount++;
             t0 = Time.time;
-
-            if (hitCounter == 2) {
-                solved = true;
-                GameManager.instance.UnlockEinsteinPuzzle();
-                GetComponent<Rigidbody>().useGravity = true;
-                GetComponent<Rigidbody>().isKinematic = false;
-            }
         }
+
+        if(bubbleCount == 2) {
+            GameManager.instance.CheckEinsteinPuzzle();
+            GetComponent<Rigidbody>().useGravity = true;
+            GetComponent<Rigidbody>().isKinematic = false;
+        } 
     }
+
 }
