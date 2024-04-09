@@ -1,25 +1,22 @@
 using System.Collections;
 using System.Collections.Generic;
-using UnityEditor.Callbacks;
 using UnityEngine;
 
-public class DoorLocker : MonoBehaviour
-{
+public class DoorLocker : MonoBehaviour {
     private Vector3 startPosition;
     private Quaternion startRotation;
-
-    public Collider grabCollider;
-
     private Rigidbody rb;
     private RigidbodyConstraints rbConstraints;
+    
+    public Collider grabCollider;
 
     // Start is called before the first frame update
-    void Start()
-    {
+    void Start() {
         startPosition = transform.position;
-        startRotation = transform.rotation;
+        startRotation = transform.rotation;        
         rb = GetComponent<Rigidbody>();
         rbConstraints = rb.constraints;
+        Lock(true);
     }
 
     // Update is called once per frame
@@ -28,9 +25,8 @@ public class DoorLocker : MonoBehaviour
         
     }
 
-    public void Lock(bool locked)
-    {
-        if (locked) {
+    public void Lock(bool locked) {
+        if(locked) {
             transform.position = startPosition;
             transform.rotation = startRotation;
             grabCollider.enabled = false;

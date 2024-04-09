@@ -44,6 +44,9 @@ public class HingeGrabInteractable : XRGrabInteractable {
 
         //Calculamos a dirección dende a bisagra ó punto de agarre (knob)
         Vector3 hingeKnobDirection = (knobTransform.position - hingeTransform.position);
+        //Proxectamos o vector posición do agarre da porta dende a bisagra sobre o plano perpendicular
+        //ó eixo de rotación da bisagra (que é o plano polo que se moven o pomo polo que agarramos
+        //a tapa e o seu pivote)
         hingeKnobDirection = Vector3.ProjectOnPlane(hingeKnobDirection, hingeTransform.up).normalized;
 
         //Calculamos a dirección dende a bisagra á man que ten agarrado o obxecto
