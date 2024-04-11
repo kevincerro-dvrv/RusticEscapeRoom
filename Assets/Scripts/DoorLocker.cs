@@ -31,9 +31,11 @@ public class DoorLocker : MonoBehaviour {
             transform.rotation = startRotation;
             grabCollider.enabled = false;
             rb.constraints = RigidbodyConstraints.FreezeAll;
+            CabinetObjectDetector.instance.ActivateObjectsInside(false);
         } else {
             grabCollider.enabled = true;
             rb.constraints = rbConstraints;
+            CabinetObjectDetector.instance.ActivateObjectsInside(true);
         }
     }
 }
