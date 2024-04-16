@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Events;
 
 public class DoorLocker : MonoBehaviour {
     private Vector3 startPosition;
@@ -10,6 +11,7 @@ public class DoorLocker : MonoBehaviour {
     
     public Collider grabCollider;
 
+    public UnityEvent<bool> onDoorLockedChanged = new UnityEvent<bool>();
     // Start is called before the first frame update
     void Start() {
         startPosition = transform.position;
@@ -26,16 +28,16 @@ public class DoorLocker : MonoBehaviour {
     }
 
     public void Lock(bool locked) {
+        onDoorLockedChanged.Invoke(locked);
+
         if(locked) {
             transform.position = startPosition;
             transform.rotation = startRotation;
             grabCollider.enabled = false;
             rb.constraints = RigidbodyConstraints.FreezeAll;
-            CabinetObjectDetector.instance.ActivateObjectsInside(false);
         } else {
             grabCollider.enabled = true;
             rb.constraints = rbConstraints;
-            CabinetObjectDetector.instance.ActivateObjectsInside(true);
         }
     }
 }
