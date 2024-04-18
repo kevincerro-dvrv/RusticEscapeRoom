@@ -12,6 +12,7 @@ public class DoorLocker : MonoBehaviour {
     public Collider grabCollider;
 
     public UnityEvent<bool> onDoorLockedChanged = new UnityEvent<bool>();
+    
     // Start is called before the first frame update
     void Start() {
         startPosition = transform.position;
