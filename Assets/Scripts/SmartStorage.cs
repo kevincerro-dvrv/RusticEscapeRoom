@@ -4,13 +4,11 @@ using UnityEngine;
 
 public class SmartStorage : MonoBehaviour {
     private List<SmartObject> storedObjects;
-
     private bool doorLocked;
 
-    // Start is called before the first frame update
-    void Start() {
+
+    void Awake() {
         storedObjects = new List<SmartObject>();
-        
     }
 
     // Update is called once per frame
@@ -23,18 +21,17 @@ public class SmartStorage : MonoBehaviour {
         Debug.Log(other.gameObject.name);
         SmartObject so = other.GetComponent<SmartObject>();
         if(so != null) {
-            if (doorLocked) {
+            if(doorLocked) {
                 so.Activate(false);
             }
-
-            if (!storedObjects.Contains(so)) {
+            if( ! storedObjects.Contains(so)) {
                 storedObjects.Add(so);
             }
         }
     }
 
     void OnTriggerExit(Collider other) {
-        Debug.Log(other.gameObject.name);
+        Debug.Log("[SmartStorage] OnTriggerExit " + other.gameObject.name);
         SmartObject so = other.GetComponent<SmartObject>();
         if(so != null) {
             storedObjects.Remove(so);
@@ -43,11 +40,16 @@ public class SmartStorage : MonoBehaviour {
 
     public void Lock(bool locked) {
         Debug.Log("[SmartStorage] Lock " + locked);
-
         doorLocked = locked;
-
-        foreach (SmartObject so in storedObjects) {
-            so.Activate(!locked);
+        if(locked) {
+            foreach(SmartObject so in storedObjects) {
+                so.Activate(false);
+            }
+        } else {
+            foreach(SmartObject so in storedObjects) {
+                so.Activate(true);
+                Debug.Log("[SmartStorage] Lock activando " + so.label);
+            }
         }
     }
 }
