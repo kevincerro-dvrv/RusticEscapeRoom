@@ -984,6 +984,11 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 2636984940413250652, guid: 1f016837b25f461428cff0c6e2154e4f,
+        type: 3}
+      propertyPath: rightDishWeigth
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -3390,17 +3395,17 @@ PrefabInstance:
     - target: {fileID: 821324617058717411, guid: 18d9bafd4e7591347b9751e6fdf1beb9,
         type: 3}
       propertyPath: m_LocalPosition.x
-      value: 0.996
+      value: -0.996
       objectReference: {fileID: 0}
     - target: {fileID: 821324617058717411, guid: 18d9bafd4e7591347b9751e6fdf1beb9,
         type: 3}
       propertyPath: m_LocalPosition.y
-      value: 0.938
+      value: 1.256
       objectReference: {fileID: 0}
     - target: {fileID: 821324617058717411, guid: 18d9bafd4e7591347b9751e6fdf1beb9,
         type: 3}
       propertyPath: m_LocalPosition.z
-      value: 1.68
+      value: 1.547
       objectReference: {fileID: 0}
     - target: {fileID: 821324617058717411, guid: 18d9bafd4e7591347b9751e6fdf1beb9,
         type: 3}
@@ -3459,6 +3464,10 @@ PrefabInstance:
         type: 3}
       insertIndex: -1
       addedObject: {fileID: 813628796}
+    - targetCorrespondingSourceObject: {fileID: 4413166702188526832, guid: 18d9bafd4e7591347b9751e6fdf1beb9,
+        type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 813628803}
   m_SourcePrefab: {fileID: 100100000, guid: 18d9bafd4e7591347b9751e6fdf1beb9, type: 3}
 --- !u!1 &813628795 stripped
 GameObject:
@@ -3632,6 +3641,19 @@ MonoBehaviour:
   m_StartingSingleGrabTransformers: []
   m_StartingMultipleGrabTransformers: []
   m_AddDefaultGrabTransformers: 1
+--- !u!114 &813628803
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 813628795}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4821af5519d71074d894c1f827c769aa, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  weigth: 0.1
 --- !u!1 &824733597
 GameObject:
   m_ObjectHideFlags: 0
@@ -9000,6 +9022,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1239584033023288304}
+  - component: {fileID: 1239584033023288306}
   m_Layer: 7
   m_Name: Puzzle2023
   m_TagString: Untagged
@@ -9007,6 +9030,19 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
+--- !u!114 &1239584033023288306
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1239584033023288305}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4821af5519d71074d894c1f827c769aa, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  weigth: 10
 --- !u!4 &1239584033428429833
 Transform:
   m_ObjectHideFlags: 0

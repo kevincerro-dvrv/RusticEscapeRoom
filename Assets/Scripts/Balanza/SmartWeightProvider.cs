@@ -5,6 +5,7 @@ using UnityEngine;
 public class SmartWeightProvider : MonoBehaviour {
     public float weigth;
     private bool isGraviting;
+
     // Start is called before the first frame update
     void Start() {
         isGraviting = true;
