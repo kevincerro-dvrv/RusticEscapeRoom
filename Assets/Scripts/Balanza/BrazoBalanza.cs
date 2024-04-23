@@ -2,68 +2,67 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class BrazoBalanza : MonoBehaviour
-{
-    private float maxAngle = 8f;
+public class BrazoBalanza : MonoBehaviour {
+    private float maxAngle = 8.0f;
     private float maxWeightDifference = 0.4f;
 
-    private List<SmartWeightProvider> leftDishWeigthObjects = new();
-    private float leftDishWeigth = 0;
-    public float rightDishWeigth = 10;
+    public delegate void WeightChangedDelegate(bool correctWeight);
+    public WeightChangedDelegate OnWeightChanged;
 
-    private float targetAngle = 0;
+    private List<SmartWeightProvider> leftDishContent;
 
+    private float targetAngle;
+    private float angularSpeed = 80f;
+
+    private float leftDishWeight;
+    public float rightDishWeight;
     // Start is called before the first frame update
-    void Start()
-    {
-        CalculateTargetAngle();
+    void Start() {
+        leftDishContent = new List<SmartWeightProvider>();
+        leftDishWeight = 0;
+
         ZonaSensibleHandler.OnObjectEnter += AddObject;
         ZonaSensibleHandler.OnObjectExit += RemoveObject;
+
+        CalculateLeftDishWeight();        
     }
 
     // Update is called once per frame
-    void Update()
-    {
-        Vector3 localRotation = transform.localEulerAngles;
-
-        localRotation.z = targetAngle;
-
-        transform.localEulerAngles = localRotation; 
+    void Update() {
+        Vector3 newRotation = transform.localEulerAngles;
+        newRotation.z = targetAngle;
+        transform.localEulerAngles = newRotation;
+        
     }
 
-    void AddObject(SmartWeightProvider swp)
-    {
-        if (leftDishWeigthObjects.Contains(swp)) {
-            return;
+    private void AddObject(SmartWeightProvider swp) {
+        leftDishContent.Add(swp);
+
+        CalculateLeftDishWeight();
+    }
+
+    private void RemoveObject(SmartWeightProvider swp) {
+        leftDishContent.Remove(swp);
+
+        CalculateLeftDishWeight();
+    }
+
+    private void CalculateLeftDishWeight() {
+        
+        leftDishWeight = 0;
+        foreach(SmartWeightProvider swp in leftDishContent) {
+            leftDishWeight += swp.weigth;
         }
 
-        Debug.Log("AddObject");
-        leftDishWeigthObjects.Add(swp);
-        leftDishWeigth += swp.getWeigth();
+        Debug.Log("[BrazoBalanza] CalculateLeftDishWeight weight" + leftDishWeight);
 
-        Debug.Log("TotalWeight: " + leftDishWeigth);
         targetAngle = CalculateTargetAngle();
     }
 
-    void RemoveObject(SmartWeightProvider swp)
-    {
-        if (!leftDishWeigthObjects.Contains(swp)) {
-            return;
-        }
 
-        Debug.Log("RemoveObject");
-        leftDishWeigthObjects.Remove(swp);
-        leftDishWeigth -= swp.getWeigth();
-
-        Debug.Log("TotalWeight: " + leftDishWeigth);
-    }
-
-    private float CalculateTargetAngle()
-    {
-        float t = Mathf.InverseLerp(-maxWeightDifference, maxWeightDifference,  rightDishWeigth - leftDishWeigth);
-        float angle = Mathf.Lerp(-8f, 8f, t);
-
-
+    private float CalculateTargetAngle() {
+        float t = Mathf.InverseLerp(-maxWeightDifference, maxWeightDifference, leftDishWeight-rightDishWeight);
+        float angle = Mathf.Lerp(t, -maxAngle, maxAngle);
         return angle;
     }
 }
