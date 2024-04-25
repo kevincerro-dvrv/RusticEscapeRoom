@@ -10,6 +10,8 @@ public class GameManager : MonoBehaviour {
     public PuzzlePiece[] puzzlePieces;
     public DoorKeyButton[] doorPanelButtons;
 
+    public BrazoBalanza brazoBalanza;
+
     private int[] puzzlePieceCode;
 
     public GameObject[] redLigths;
@@ -30,6 +32,8 @@ public class GameManager : MonoBehaviour {
             //puzzlePiece.GetComponent<MeshRenderer>().material = puzzlePieceMaterials[puzzlePieceCode[i]];
             i++;
         }
+
+        brazoBalanza.OnWeightChanged += BalanzaWeightChanged;
         
     }
 
@@ -56,4 +60,14 @@ public class GameManager : MonoBehaviour {
         redLigths[1].SetActive(false);
         greenLigths[1].SetActive(true);
     }
+
+    private void BalanzaWeightChanged(bool weightCorrect) {
+        if(weightCorrect) {
+            redLigths[2].SetActive(false);
+            greenLigths[2].SetActive(true);
+        } else {
+            redLigths[2].SetActive(true);
+            greenLigths[2].SetActive(false);
+        }
+     }
 }

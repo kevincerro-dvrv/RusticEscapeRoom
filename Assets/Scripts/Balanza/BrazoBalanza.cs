@@ -29,14 +29,27 @@ public class BrazoBalanza : MonoBehaviour {
 
     // Update is called once per frame
     void Update() {
-        Vector3 newRotation = transform.localEulerAngles;
-        newRotation.z = targetAngle;
-        transform.localEulerAngles = newRotation;
+
+        float angleDiference = transform.localEulerAngles.z - targetAngle;
+        angleDiference = angleDiference<180?angleDiference:angleDiference-360f;
+        if(Mathf.Abs(angleDiference) < 0.5f) {
+            Vector3 newRotation = transform.localEulerAngles;
+            newRotation.z = targetAngle;
+            transform.localEulerAngles = newRotation;
+        } else {
+            transform.Rotate(transform.forward * Time.deltaTime * angularSpeed * Mathf.Sign(angleDiference));
+        }
+        
+
+
+        
         
     }
 
     private void AddObject(SmartWeightProvider swp) {
-        leftDishContent.Add(swp);
+        if(! leftDishContent.Contains(swp)) {
+            leftDishContent.Add(swp);
+        }
 
         CalculateLeftDishWeight();
     }
@@ -48,21 +61,24 @@ public class BrazoBalanza : MonoBehaviour {
     }
 
     private void CalculateLeftDishWeight() {
-        
         leftDishWeight = 0;
         foreach(SmartWeightProvider swp in leftDishContent) {
-            leftDishWeight += swp.weigth;
+            leftDishWeight += swp.GetWeigth();
         }
 
         Debug.Log("[BrazoBalanza] CalculateLeftDishWeight weight" + leftDishWeight);
 
         targetAngle = CalculateTargetAngle();
+
+        if(OnWeightChanged != null) {
+            OnWeightChanged(leftDishWeight == rightDishWeight);
+        }
     }
 
 
     private float CalculateTargetAngle() {
-        float t = Mathf.InverseLerp(-maxWeightDifference, maxWeightDifference, leftDishWeight-rightDishWeight);
-        float angle = Mathf.Lerp(t, -maxAngle, maxAngle);
+        float t = Mathf.InverseLerp(-maxWeightDifference, maxWeightDifference, rightDishWeight-leftDishWeight);
+        float angle = Mathf.Lerp(-maxAngle, maxAngle, t);
         return angle;
     }
 }
