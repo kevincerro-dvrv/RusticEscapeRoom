@@ -17,10 +17,12 @@ public class GameManager : MonoBehaviour {
     public GameObject[] redLigths;
     public GameObject[] greenLigths;
 
+    public Animator doorAnimator;
 
     void Awake() {
         instance = this;
     }
+
     // Start is called before the first frame update
     void Start() {
         puzzlePieceCode = new int[puzzlePieces.Length];
@@ -39,7 +41,11 @@ public class GameManager : MonoBehaviour {
 
     // Update is called once per frame
     void Update() {
-        
+        if (greenLigths[0].activeSelf && greenLigths[1].activeSelf && greenLigths[2].activeSelf) {
+            doorAnimator.SetBool("Open", true);
+        } else {
+            doorAnimator.SetBool("Open", false);
+        }
     }
 
     public void CheckDoorKeyCode() {
